@@ -17,9 +17,9 @@ async function main() {
       url: true,
     },
   });
-
+  console.log(websites);
   xBulk(websites);
 }
 
 main();
-setInterval(main, 3 * 1000);
+setInterval(main, 10 * 1000);

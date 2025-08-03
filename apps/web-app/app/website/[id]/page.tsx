@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/table";
 import axios from "axios";
 import { BACKEND_URL, token } from "@/app/utility";
+import Loader from "@/components/ui/loader";
 // import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const getStatusIcon = (status: string) => {
@@ -69,7 +70,7 @@ function formatDate(isoString: string) {
   });
 }
 
-interface Ticks {
+export interface Ticks {
   id: string;
   response_time_ms: string;
   status: string;
@@ -100,7 +101,6 @@ export default function WebsiteDetail() {
     setWebsites(response.data);
     setLoading(false);
   };
-  console.log(website);
 
   // Use Effect Getting Websites status for single website
   useEffect(() => {
@@ -156,7 +156,11 @@ export default function WebsiteDetail() {
   //     : 0;
 
   if (!website) {
-    return <p>Loading....</p>;
+    return (
+      <div className='bg-black h-screen w-screen flex items-center justify-center'>
+        <Loader />
+      </div>
+    );
   }
   return (
     <div className='min-h-screen bg-gray-950 text-white'>
@@ -165,11 +169,7 @@ export default function WebsiteDetail() {
         <div className='container mx-auto px-4 py-4'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
-              <Link href='/'>
-                <Button variant='ghost' size='icon'>
-                  <ArrowLeft className='h-5 w-5' />
-                </Button>
-              </Link>
+             
               <div className='flex items-center gap-2'>
                 <Activity className='h-8 w-8 text-blue-500' />
                 <h1 className='text-xl font-bold'>StatusMonitor</h1>
@@ -188,6 +188,15 @@ export default function WebsiteDetail() {
         {/* Website Header */}
         <div className='mb-8'>
           <div className='flex items-center gap-4 mb-4'>
+            <Link href='/'>
+              <Button
+                variant='ghost'
+                size='icon'
+                className='bg-white text-black'
+              >
+                <ArrowLeft className='h-5 w-5' />
+              </Button>
+            </Link>
             {/* {getStatusIcon(website.status)} */}
             <div>
               <h1 className='text-3xl font-bold text-white'>
@@ -377,8 +386,8 @@ export default function WebsiteDetail() {
         {/* Recent Checks Table */}
         <Card className='bg-gray-900 border-gray-800'>
           <CardHeader>
-            <CardTitle className='flex items-center gap-2'>
-              <Clock className='h-5 w-5' />
+            <CardTitle className='flex items-center gap-2 text-white'>
+              <Clock className='h-5 w-5 text-white' />
               Recent Monitoring Checks
             </CardTitle>
             <CardDescription className='text-gray-400'>
@@ -388,10 +397,7 @@ export default function WebsiteDetail() {
           </CardHeader>
           <CardContent className='p-0'>
             {loading ? (
-              <div className='p-8 text-center'>
-                <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4'></div>
-                <p className='text-gray-400'>Loading monitoring data...</p>
-              </div>
+              <Loader />
             ) : (
               <Table>
                 <TableHeader>

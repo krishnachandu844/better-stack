@@ -18,6 +18,7 @@ import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../utility";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -39,9 +40,10 @@ export default function Signup() {
       });
 
       console.log(response.data);
+      toast.success("User Created Successfully");
       router.push("/signin");
-    } catch (error) {
-      console.error("Signup failed", error);
+    } catch (error: any) {
+      toast.error(error.response.data.message);
     }
   };
 

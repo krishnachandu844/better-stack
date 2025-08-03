@@ -44,12 +44,14 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { BACKEND_URL, token } from "../utility";
+import { toast } from "sonner";
+import { Ticks } from "../website/[id]/page";
 
 interface Website {
   id: string;
   websiteName: string;
   url: string;
-  status: "up" | "down";
+  status: "up" | "down" | "checking";
   lastChecked: string;
   responseTime: number;
 }
@@ -58,7 +60,7 @@ export default function Dashboard() {
   const [websites, setWebsites] = useState<Website[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState<"india" | "usa">("usa");
+  // const [selectedRegion, setSelectedRegion] = useState<"india" | "usa">("usa");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [newWebsite, setNewWebsite] = useState({
     name: "",
@@ -79,25 +81,33 @@ export default function Dashboard() {
 
   //Get Websites
   const getWebsites = async () => {
+    console.log("Websites Called");
     const response = await axios.get(`${BACKEND_URL}/websites`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     console.log(response.data);
+
     setWebsites(
-      response.data.map((w: Website & { ticks?: any[] }) => ({
-        id: w.id,
-        websiteName: w.websiteName,
-        url: w.url,
-        status: w.ticks
-          ? w.ticks[0].status === "Up"
-            ? "up"
-            : w.ticks[0].status
-          : "checking",
-        lastChecked: w.ticks && w.ticks[0].createdAt,
-        responseTime: (w.ticks && w.ticks[0].response_time_ms) || null,
-      }))
+      response.data.map((w: Website & { ticks?: Ticks[] }) => {
+        const hasNoTicks = !w.ticks || w.ticks.length === 0;
+
+        return {
+          id: w.id,
+          websiteName: w.websiteName,
+          url: w.url,
+          status: hasNoTicks
+            ? "checking"
+            : w.ticks?.[0]?.status === "Up"
+              ? "up"
+              : w.ticks?.[0]?.status,
+          lastChecked: hasNoTicks ? Date.now() : w.ticks?.[0]?.createdAt,
+          responseTime: hasNoTicks
+            ? "0"
+            : w.ticks?.[0]?.response_time_ms || null,
+        };
+      })
     );
   };
 
@@ -105,31 +115,36 @@ export default function Dashboard() {
   useEffect(() => {
     getWebsites();
   }, []);
-  // console.log(websites);
 
-  // const filteredWebsites = useMemo(() => {
-  //   return websites.filter(
-  //     (website) =>
-  //       website.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //       website.url.toLowerCase().includes(searchQuery.toLowerCase())
-  //   );
-  // }, [websites, searchQuery]);
+  const filteredWebsites = useMemo(() => {
+    return websites.filter(
+      (website) =>
+        website.websiteName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        website.url.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [websites, searchQuery]);
 
   //Adding Website
   const handleAddWebsite = async () => {
-    const response = await axios.post(
-      `${BACKEND_URL}/website`,
-      {
-        websiteName: newWebsite.name,
-        url: newWebsite.url,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/website`,
+        {
+          websiteName: newWebsite.name,
+          url: newWebsite.url,
         },
-      }
-    );
-    console.log(response.data);
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setIsModalOpen(false);
+      getWebsites();
+      toast.success(response.data.message);
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
   };
 
   const handleRefresh = async () => {
@@ -145,7 +160,7 @@ export default function Dashboard() {
     window.location.href = "/";
   };
 
-  const getStatusBadge = (status: "up" | "down") => {
+  const getStatusBadge = (status: "up" | "down" | "checking") => {
     return (
       <Badge
         variant={status === "up" ? "default" : "destructive"}
@@ -159,11 +174,6 @@ export default function Dashboard() {
       </Badge>
     );
   };
-
-  // const upWebsites = filteredWebsites.filter((w) => w.status === "up").length;
-  // const downWebsites = filteredWebsites.filter(
-  //   (w) => w.status === "down"
-  // ).length;
 
   return (
     <div className='min-h-screen bg-gray-950'>
@@ -187,7 +197,7 @@ export default function Dashboard() {
 
             <div className='flex items-center space-x-4'>
               {/* Region Selector */}
-              <div className='flex items-center space-x-2'>
+              {/* <div className='flex items-center space-x-2'>
                 <MapPin className='w-4 h-4 text-gray-400' />
                 <Select
                   value={selectedRegion}
@@ -213,7 +223,7 @@ export default function Dashboard() {
                     </SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
 
               {/* Refresh Button */}
               <Button
@@ -300,7 +310,7 @@ export default function Dashboard() {
                 variant='outline'
                 size='sm'
                 onClick={handleLogout}
-                className='border-red-700 text-red-400 hover:bg-red-900/20 hover:border-red-600 bg-transparent'
+                className='border-red-700 text-red-400  hover:bg-black hover:text-red-500 bg-transparent'
               >
                 <LogOut className='w-4 h-4 mr-2' />
                 Logout
@@ -355,7 +365,7 @@ export default function Dashboard() {
                   </TableCell>
                 </TableRow>
               ) : (
-                websites.map((website) => (
+                filteredWebsites.map((website) => (
                   <TableRow
                     key={website.id}
                     className='border-gray-800 hover:bg-gray-800/30'
@@ -372,7 +382,18 @@ export default function Dashboard() {
                         </div>
                       </Link>
                     </TableCell>
-                    <TableCell>{getStatusBadge(website.status)}</TableCell>
+                    <TableCell>
+                      {website.status === "checking" ? (
+                        <div className='flex gap-1'>
+                          <RefreshCw
+                            className={`w-4 h-4 mr-2 animate-spin text-white`}
+                          />
+                          <p className='font-medium text-white'>Checking...</p>
+                        </div>
+                      ) : (
+                        getStatusBadge(website.status)
+                      )}
+                    </TableCell>
                     {/* <TableCell>
                       <div className='text-sm'>
                         <div className='text-gray-400'>

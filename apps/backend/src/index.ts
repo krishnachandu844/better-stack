@@ -12,8 +12,19 @@ app.use(express.json());
 
 app.post("/website", authMiddleware, async (req, res) => {
   const { url, regionId, websiteName } = req.body;
+  const isWebsiteExists = await prisma.website.findFirst({
+    where: {
+      userId: req.userId,
+      websiteName,
+      url,
+    },
+  });
+  if (isWebsiteExists) {
+    res.status(411).json({ message: "Website Already Exists" });
+    return;
+  }
   if (!url) {
-    res.status(411).json({ message: "Need URL of an Website" });
+    res.status(411).json({ message: "Enter URL of Website" });
     return;
   }
   const website = await prisma.website.create({
@@ -25,6 +36,7 @@ app.post("/website", authMiddleware, async (req, res) => {
   });
   res.status(200).json({
     id: website.id,
+    message: "Website Added Sccessfully",
   });
 });
 

@@ -18,6 +18,7 @@ import { useState } from "react";
 import { BACKEND_URL } from "../utility";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { toast } from "sonner";
 
 export default function Signin() {
   const [username, setUserName] = useState("");
@@ -34,11 +35,13 @@ export default function Signin() {
       });
 
       console.log(response.data);
+
       const token = response.data.token;
       Cookies.set("token", token);
       router.push("/dashboard");
-    } catch (error) {
-      console.error("Signup failed", error);
+      toast.success("Login Successfully");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
     }
   };
   return (

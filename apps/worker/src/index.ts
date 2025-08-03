@@ -8,18 +8,24 @@ const CONSUMER_GROUP = "india";
 const WORKER_ID = "india-1";
 
 async function main() {
-  // while (1) {}
-  const response = await xReadGroup(CONSUMER_GROUP, WORKER_ID);
-  let promises = response.map((res: any) =>
-    fetchWebsites(res.message.id, res.message.url)
-  );
-  await Promise.all(promises);
+  while (1) {
+    const response = await xReadGroup(CONSUMER_GROUP, WORKER_ID);
+
+    let promises = response.map((res: any) =>
+      fetchWebsites(res.message.id, res.message.url)
+    );
+    await Promise.all(promises);
+    await xAck(
+      CONSUMER_GROUP,
+      response.map((res: any) => res.id)
+    );
+  }
 }
 
 //Fetching Websites
 async function fetchWebsites(id: string, url: string) {
+  console.log(id);
   return new Promise<void>((resolve, reject) => {
-    // const { id, url } = res.message;
     const startTime = Date.now();
     axios
       .get(url)
