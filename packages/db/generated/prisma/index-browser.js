@@ -130,24 +130,16 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.WebsiteScalarFieldEnum = {
   id: 'id',
-  websiteName: 'websiteName',
+  url: 'url',
   userId: 'userId',
-  regionId: 'regionId',
   timeAdded: 'timeAdded',
-  url: 'url'
-};
-
-exports.Prisma.RegionScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  website_id: 'website_id'
+  websiteName: 'websiteName'
 };
 
 exports.Prisma.WebsiteTickScalarFieldEnum = {
   id: 'id',
   response_time_ms: 'response_time_ms',
   status: 'status',
-  region_id: 'region_id',
   website_id: 'website_id',
   createdAt: 'createdAt'
 };
@@ -161,11 +153,6 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
 exports.WebSiteStatus = exports.$Enums.WebSiteStatus = {
   Up: 'Up',
   Down: 'Down',
@@ -175,7 +162,6 @@ exports.WebSiteStatus = exports.$Enums.WebSiteStatus = {
 exports.Prisma.ModelName = {
   User: 'User',
   Website: 'Website',
-  Region: 'Region',
   WebsiteTick: 'WebsiteTick'
 };
 

@@ -24,11 +24,6 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Website = $Result.DefaultSelection<Prisma.$WebsitePayload>
 /**
- * Model Region
- * 
- */
-export type Region = $Result.DefaultSelection<Prisma.$RegionPayload>
-/**
  * Model WebsiteTick
  * 
  */
@@ -196,16 +191,6 @@ export class PrismaClient<
     * ```
     */
   get website(): Prisma.WebsiteDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.region`: Exposes CRUD operations for the **Region** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Regions
-    * const regions = await prisma.region.findMany()
-    * ```
-    */
-  get region(): Prisma.RegionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.websiteTick`: Exposes CRUD operations for the **WebsiteTick** model.
@@ -658,7 +643,6 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Website: 'Website',
-    Region: 'Region',
     WebsiteTick: 'WebsiteTick'
   };
 
@@ -678,7 +662,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "website" | "region" | "websiteTick"
+      modelProps: "user" | "website" | "websiteTick"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -827,80 +811,6 @@ export namespace Prisma {
           count: {
             args: Prisma.WebsiteCountArgs<ExtArgs>
             result: $Utils.Optional<WebsiteCountAggregateOutputType> | number
-          }
-        }
-      }
-      Region: {
-        payload: Prisma.$RegionPayload<ExtArgs>
-        fields: Prisma.RegionFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.RegionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.RegionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload>
-          }
-          findFirst: {
-            args: Prisma.RegionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.RegionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload>
-          }
-          findMany: {
-            args: Prisma.RegionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload>[]
-          }
-          create: {
-            args: Prisma.RegionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload>
-          }
-          createMany: {
-            args: Prisma.RegionCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.RegionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload>[]
-          }
-          delete: {
-            args: Prisma.RegionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload>
-          }
-          update: {
-            args: Prisma.RegionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload>
-          }
-          deleteMany: {
-            args: Prisma.RegionDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.RegionUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.RegionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload>[]
-          }
-          upsert: {
-            args: Prisma.RegionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RegionPayload>
-          }
-          aggregate: {
-            args: Prisma.RegionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRegion>
-          }
-          groupBy: {
-            args: Prisma.RegionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RegionGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.RegionCountArgs<ExtArgs>
-            result: $Utils.Optional<RegionCountAggregateOutputType> | number
           }
         }
       }
@@ -1064,7 +974,6 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     website?: WebsiteOmit
-    region?: RegionOmit
     websiteTick?: WebsiteTickOmit
   }
 
@@ -1192,12 +1101,10 @@ export namespace Prisma {
 
   export type WebsiteCountOutputType = {
     ticks: number
-    regions: number
   }
 
   export type WebsiteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ticks?: boolean | WebsiteCountOutputTypeCountTicksArgs
-    regions?: boolean | WebsiteCountOutputTypeCountRegionsArgs
   }
 
   // Custom InputTypes
@@ -1216,13 +1123,6 @@ export namespace Prisma {
    */
   export type WebsiteCountOutputTypeCountTicksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WebsiteTickWhereInput
-  }
-
-  /**
-   * WebsiteCountOutputType without action
-   */
-  export type WebsiteCountOutputTypeCountRegionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RegionWhereInput
   }
 
 
@@ -2312,58 +2212,52 @@ export namespace Prisma {
 
   export type WebsiteMinAggregateOutputType = {
     id: string | null
-    websiteName: string | null
-    userId: string | null
-    regionId: string | null
-    timeAdded: Date | null
     url: string | null
+    userId: string | null
+    timeAdded: Date | null
+    websiteName: string | null
   }
 
   export type WebsiteMaxAggregateOutputType = {
     id: string | null
-    websiteName: string | null
-    userId: string | null
-    regionId: string | null
-    timeAdded: Date | null
     url: string | null
+    userId: string | null
+    timeAdded: Date | null
+    websiteName: string | null
   }
 
   export type WebsiteCountAggregateOutputType = {
     id: number
-    websiteName: number
-    userId: number
-    regionId: number
-    timeAdded: number
     url: number
+    userId: number
+    timeAdded: number
+    websiteName: number
     _all: number
   }
 
 
   export type WebsiteMinAggregateInputType = {
     id?: true
-    websiteName?: true
-    userId?: true
-    regionId?: true
-    timeAdded?: true
     url?: true
+    userId?: true
+    timeAdded?: true
+    websiteName?: true
   }
 
   export type WebsiteMaxAggregateInputType = {
     id?: true
-    websiteName?: true
-    userId?: true
-    regionId?: true
-    timeAdded?: true
     url?: true
+    userId?: true
+    timeAdded?: true
+    websiteName?: true
   }
 
   export type WebsiteCountAggregateInputType = {
     id?: true
-    websiteName?: true
-    userId?: true
-    regionId?: true
-    timeAdded?: true
     url?: true
+    userId?: true
+    timeAdded?: true
+    websiteName?: true
     _all?: true
   }
 
@@ -2441,11 +2335,10 @@ export namespace Prisma {
 
   export type WebsiteGroupByOutputType = {
     id: string
-    websiteName: string
-    userId: string
-    regionId: string | null
-    timeAdded: Date
     url: string
+    userId: string
+    timeAdded: Date
+    websiteName: string
     _count: WebsiteCountAggregateOutputType | null
     _min: WebsiteMinAggregateOutputType | null
     _max: WebsiteMaxAggregateOutputType | null
@@ -2467,50 +2360,44 @@ export namespace Prisma {
 
   export type WebsiteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    websiteName?: boolean
-    userId?: boolean
-    regionId?: boolean
-    timeAdded?: boolean
     url?: boolean
+    userId?: boolean
+    timeAdded?: boolean
+    websiteName?: boolean
     ticks?: boolean | Website$ticksArgs<ExtArgs>
-    regions?: boolean | Website$regionsArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | WebsiteCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["website"]>
 
   export type WebsiteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    websiteName?: boolean
-    userId?: boolean
-    regionId?: boolean
-    timeAdded?: boolean
     url?: boolean
+    userId?: boolean
+    timeAdded?: boolean
+    websiteName?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["website"]>
 
   export type WebsiteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    websiteName?: boolean
-    userId?: boolean
-    regionId?: boolean
-    timeAdded?: boolean
     url?: boolean
+    userId?: boolean
+    timeAdded?: boolean
+    websiteName?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["website"]>
 
   export type WebsiteSelectScalar = {
     id?: boolean
-    websiteName?: boolean
-    userId?: boolean
-    regionId?: boolean
-    timeAdded?: boolean
     url?: boolean
+    userId?: boolean
+    timeAdded?: boolean
+    websiteName?: boolean
   }
 
-  export type WebsiteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "websiteName" | "userId" | "regionId" | "timeAdded" | "url", ExtArgs["result"]["website"]>
+  export type WebsiteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "userId" | "timeAdded" | "websiteName", ExtArgs["result"]["website"]>
   export type WebsiteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ticks?: boolean | Website$ticksArgs<ExtArgs>
-    regions?: boolean | Website$regionsArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | WebsiteCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -2525,16 +2412,14 @@ export namespace Prisma {
     name: "Website"
     objects: {
       ticks: Prisma.$WebsiteTickPayload<ExtArgs>[]
-      regions: Prisma.$RegionPayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      websiteName: string
-      userId: string
-      regionId: string | null
-      timeAdded: Date
       url: string
+      userId: string
+      timeAdded: Date
+      websiteName: string
     }, ExtArgs["result"]["website"]>
     composites: {}
   }
@@ -2930,7 +2815,6 @@ export namespace Prisma {
   export interface Prisma__WebsiteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     ticks<T extends Website$ticksArgs<ExtArgs> = {}>(args?: Subset<T, Website$ticksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WebsiteTickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    regions<T extends Website$regionsArgs<ExtArgs> = {}>(args?: Subset<T, Website$regionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2962,11 +2846,10 @@ export namespace Prisma {
    */
   interface WebsiteFieldRefs {
     readonly id: FieldRef<"Website", 'String'>
-    readonly websiteName: FieldRef<"Website", 'String'>
-    readonly userId: FieldRef<"Website", 'String'>
-    readonly regionId: FieldRef<"Website", 'String'>
-    readonly timeAdded: FieldRef<"Website", 'DateTime'>
     readonly url: FieldRef<"Website", 'String'>
+    readonly userId: FieldRef<"Website", 'String'>
+    readonly timeAdded: FieldRef<"Website", 'DateTime'>
+    readonly websiteName: FieldRef<"Website", 'String'>
   }
     
 
@@ -3387,30 +3270,6 @@ export namespace Prisma {
   }
 
   /**
-   * Website.regions
-   */
-  export type Website$regionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    where?: RegionWhereInput
-    orderBy?: RegionOrderByWithRelationInput | RegionOrderByWithRelationInput[]
-    cursor?: RegionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: RegionScalarFieldEnum | RegionScalarFieldEnum[]
-  }
-
-  /**
    * Website without action
    */
   export type WebsiteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3426,1038 +3285,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: WebsiteInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Region
-   */
-
-  export type AggregateRegion = {
-    _count: RegionCountAggregateOutputType | null
-    _min: RegionMinAggregateOutputType | null
-    _max: RegionMaxAggregateOutputType | null
-  }
-
-  export type RegionMinAggregateOutputType = {
-    id: string | null
-    name: string | null
-    website_id: string | null
-  }
-
-  export type RegionMaxAggregateOutputType = {
-    id: string | null
-    name: string | null
-    website_id: string | null
-  }
-
-  export type RegionCountAggregateOutputType = {
-    id: number
-    name: number
-    website_id: number
-    _all: number
-  }
-
-
-  export type RegionMinAggregateInputType = {
-    id?: true
-    name?: true
-    website_id?: true
-  }
-
-  export type RegionMaxAggregateInputType = {
-    id?: true
-    name?: true
-    website_id?: true
-  }
-
-  export type RegionCountAggregateInputType = {
-    id?: true
-    name?: true
-    website_id?: true
-    _all?: true
-  }
-
-  export type RegionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Region to aggregate.
-     */
-    where?: RegionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Regions to fetch.
-     */
-    orderBy?: RegionOrderByWithRelationInput | RegionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: RegionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Regions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Regions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Regions
-    **/
-    _count?: true | RegionCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: RegionMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: RegionMaxAggregateInputType
-  }
-
-  export type GetRegionAggregateType<T extends RegionAggregateArgs> = {
-        [P in keyof T & keyof AggregateRegion]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateRegion[P]>
-      : GetScalarType<T[P], AggregateRegion[P]>
-  }
-
-
-
-
-  export type RegionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RegionWhereInput
-    orderBy?: RegionOrderByWithAggregationInput | RegionOrderByWithAggregationInput[]
-    by: RegionScalarFieldEnum[] | RegionScalarFieldEnum
-    having?: RegionScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: RegionCountAggregateInputType | true
-    _min?: RegionMinAggregateInputType
-    _max?: RegionMaxAggregateInputType
-  }
-
-  export type RegionGroupByOutputType = {
-    id: string
-    name: string
-    website_id: string
-    _count: RegionCountAggregateOutputType | null
-    _min: RegionMinAggregateOutputType | null
-    _max: RegionMaxAggregateOutputType | null
-  }
-
-  type GetRegionGroupByPayload<T extends RegionGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<RegionGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof RegionGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], RegionGroupByOutputType[P]>
-            : GetScalarType<T[P], RegionGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type RegionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    website_id?: boolean
-    website?: boolean | WebsiteDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["region"]>
-
-  export type RegionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    website_id?: boolean
-    website?: boolean | WebsiteDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["region"]>
-
-  export type RegionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    website_id?: boolean
-    website?: boolean | WebsiteDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["region"]>
-
-  export type RegionSelectScalar = {
-    id?: boolean
-    name?: boolean
-    website_id?: boolean
-  }
-
-  export type RegionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "website_id", ExtArgs["result"]["region"]>
-  export type RegionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    website?: boolean | WebsiteDefaultArgs<ExtArgs>
-  }
-  export type RegionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    website?: boolean | WebsiteDefaultArgs<ExtArgs>
-  }
-  export type RegionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    website?: boolean | WebsiteDefaultArgs<ExtArgs>
-  }
-
-  export type $RegionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Region"
-    objects: {
-      website: Prisma.$WebsitePayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      name: string
-      website_id: string
-    }, ExtArgs["result"]["region"]>
-    composites: {}
-  }
-
-  type RegionGetPayload<S extends boolean | null | undefined | RegionDefaultArgs> = $Result.GetResult<Prisma.$RegionPayload, S>
-
-  type RegionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RegionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RegionCountAggregateInputType | true
-    }
-
-  export interface RegionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Region'], meta: { name: 'Region' } }
-    /**
-     * Find zero or one Region that matches the filter.
-     * @param {RegionFindUniqueArgs} args - Arguments to find a Region
-     * @example
-     * // Get one Region
-     * const region = await prisma.region.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends RegionFindUniqueArgs>(args: SelectSubset<T, RegionFindUniqueArgs<ExtArgs>>): Prisma__RegionClient<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Region that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {RegionFindUniqueOrThrowArgs} args - Arguments to find a Region
-     * @example
-     * // Get one Region
-     * const region = await prisma.region.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends RegionFindUniqueOrThrowArgs>(args: SelectSubset<T, RegionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RegionClient<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Region that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RegionFindFirstArgs} args - Arguments to find a Region
-     * @example
-     * // Get one Region
-     * const region = await prisma.region.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends RegionFindFirstArgs>(args?: SelectSubset<T, RegionFindFirstArgs<ExtArgs>>): Prisma__RegionClient<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Region that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RegionFindFirstOrThrowArgs} args - Arguments to find a Region
-     * @example
-     * // Get one Region
-     * const region = await prisma.region.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends RegionFindFirstOrThrowArgs>(args?: SelectSubset<T, RegionFindFirstOrThrowArgs<ExtArgs>>): Prisma__RegionClient<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Regions that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RegionFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Regions
-     * const regions = await prisma.region.findMany()
-     * 
-     * // Get first 10 Regions
-     * const regions = await prisma.region.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const regionWithIdOnly = await prisma.region.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends RegionFindManyArgs>(args?: SelectSubset<T, RegionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Region.
-     * @param {RegionCreateArgs} args - Arguments to create a Region.
-     * @example
-     * // Create one Region
-     * const Region = await prisma.region.create({
-     *   data: {
-     *     // ... data to create a Region
-     *   }
-     * })
-     * 
-     */
-    create<T extends RegionCreateArgs>(args: SelectSubset<T, RegionCreateArgs<ExtArgs>>): Prisma__RegionClient<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Regions.
-     * @param {RegionCreateManyArgs} args - Arguments to create many Regions.
-     * @example
-     * // Create many Regions
-     * const region = await prisma.region.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends RegionCreateManyArgs>(args?: SelectSubset<T, RegionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Regions and returns the data saved in the database.
-     * @param {RegionCreateManyAndReturnArgs} args - Arguments to create many Regions.
-     * @example
-     * // Create many Regions
-     * const region = await prisma.region.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Regions and only return the `id`
-     * const regionWithIdOnly = await prisma.region.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends RegionCreateManyAndReturnArgs>(args?: SelectSubset<T, RegionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Region.
-     * @param {RegionDeleteArgs} args - Arguments to delete one Region.
-     * @example
-     * // Delete one Region
-     * const Region = await prisma.region.delete({
-     *   where: {
-     *     // ... filter to delete one Region
-     *   }
-     * })
-     * 
-     */
-    delete<T extends RegionDeleteArgs>(args: SelectSubset<T, RegionDeleteArgs<ExtArgs>>): Prisma__RegionClient<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Region.
-     * @param {RegionUpdateArgs} args - Arguments to update one Region.
-     * @example
-     * // Update one Region
-     * const region = await prisma.region.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends RegionUpdateArgs>(args: SelectSubset<T, RegionUpdateArgs<ExtArgs>>): Prisma__RegionClient<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Regions.
-     * @param {RegionDeleteManyArgs} args - Arguments to filter Regions to delete.
-     * @example
-     * // Delete a few Regions
-     * const { count } = await prisma.region.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends RegionDeleteManyArgs>(args?: SelectSubset<T, RegionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Regions.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RegionUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Regions
-     * const region = await prisma.region.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends RegionUpdateManyArgs>(args: SelectSubset<T, RegionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Regions and returns the data updated in the database.
-     * @param {RegionUpdateManyAndReturnArgs} args - Arguments to update many Regions.
-     * @example
-     * // Update many Regions
-     * const region = await prisma.region.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Regions and only return the `id`
-     * const regionWithIdOnly = await prisma.region.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends RegionUpdateManyAndReturnArgs>(args: SelectSubset<T, RegionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Region.
-     * @param {RegionUpsertArgs} args - Arguments to update or create a Region.
-     * @example
-     * // Update or create a Region
-     * const region = await prisma.region.upsert({
-     *   create: {
-     *     // ... data to create a Region
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Region we want to update
-     *   }
-     * })
-     */
-    upsert<T extends RegionUpsertArgs>(args: SelectSubset<T, RegionUpsertArgs<ExtArgs>>): Prisma__RegionClient<$Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Regions.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RegionCountArgs} args - Arguments to filter Regions to count.
-     * @example
-     * // Count the number of Regions
-     * const count = await prisma.region.count({
-     *   where: {
-     *     // ... the filter for the Regions we want to count
-     *   }
-     * })
-    **/
-    count<T extends RegionCountArgs>(
-      args?: Subset<T, RegionCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], RegionCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Region.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RegionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends RegionAggregateArgs>(args: Subset<T, RegionAggregateArgs>): Prisma.PrismaPromise<GetRegionAggregateType<T>>
-
-    /**
-     * Group by Region.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RegionGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends RegionGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RegionGroupByArgs['orderBy'] }
-        : { orderBy?: RegionGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, RegionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRegionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Region model
-   */
-  readonly fields: RegionFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Region.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__RegionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    website<T extends WebsiteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WebsiteDefaultArgs<ExtArgs>>): Prisma__WebsiteClient<$Result.GetResult<Prisma.$WebsitePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Region model
-   */
-  interface RegionFieldRefs {
-    readonly id: FieldRef<"Region", 'String'>
-    readonly name: FieldRef<"Region", 'String'>
-    readonly website_id: FieldRef<"Region", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Region findUnique
-   */
-  export type RegionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    /**
-     * Filter, which Region to fetch.
-     */
-    where: RegionWhereUniqueInput
-  }
-
-  /**
-   * Region findUniqueOrThrow
-   */
-  export type RegionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    /**
-     * Filter, which Region to fetch.
-     */
-    where: RegionWhereUniqueInput
-  }
-
-  /**
-   * Region findFirst
-   */
-  export type RegionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    /**
-     * Filter, which Region to fetch.
-     */
-    where?: RegionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Regions to fetch.
-     */
-    orderBy?: RegionOrderByWithRelationInput | RegionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Regions.
-     */
-    cursor?: RegionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Regions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Regions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Regions.
-     */
-    distinct?: RegionScalarFieldEnum | RegionScalarFieldEnum[]
-  }
-
-  /**
-   * Region findFirstOrThrow
-   */
-  export type RegionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    /**
-     * Filter, which Region to fetch.
-     */
-    where?: RegionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Regions to fetch.
-     */
-    orderBy?: RegionOrderByWithRelationInput | RegionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Regions.
-     */
-    cursor?: RegionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Regions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Regions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Regions.
-     */
-    distinct?: RegionScalarFieldEnum | RegionScalarFieldEnum[]
-  }
-
-  /**
-   * Region findMany
-   */
-  export type RegionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    /**
-     * Filter, which Regions to fetch.
-     */
-    where?: RegionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Regions to fetch.
-     */
-    orderBy?: RegionOrderByWithRelationInput | RegionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Regions.
-     */
-    cursor?: RegionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Regions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Regions.
-     */
-    skip?: number
-    distinct?: RegionScalarFieldEnum | RegionScalarFieldEnum[]
-  }
-
-  /**
-   * Region create
-   */
-  export type RegionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Region.
-     */
-    data: XOR<RegionCreateInput, RegionUncheckedCreateInput>
-  }
-
-  /**
-   * Region createMany
-   */
-  export type RegionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Regions.
-     */
-    data: RegionCreateManyInput | RegionCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Region createManyAndReturn
-   */
-  export type RegionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * The data used to create many Regions.
-     */
-    data: RegionCreateManyInput | RegionCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Region update
-   */
-  export type RegionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Region.
-     */
-    data: XOR<RegionUpdateInput, RegionUncheckedUpdateInput>
-    /**
-     * Choose, which Region to update.
-     */
-    where: RegionWhereUniqueInput
-  }
-
-  /**
-   * Region updateMany
-   */
-  export type RegionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Regions.
-     */
-    data: XOR<RegionUpdateManyMutationInput, RegionUncheckedUpdateManyInput>
-    /**
-     * Filter which Regions to update
-     */
-    where?: RegionWhereInput
-    /**
-     * Limit how many Regions to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Region updateManyAndReturn
-   */
-  export type RegionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * The data used to update Regions.
-     */
-    data: XOR<RegionUpdateManyMutationInput, RegionUncheckedUpdateManyInput>
-    /**
-     * Filter which Regions to update
-     */
-    where?: RegionWhereInput
-    /**
-     * Limit how many Regions to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Region upsert
-   */
-  export type RegionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Region to update in case it exists.
-     */
-    where: RegionWhereUniqueInput
-    /**
-     * In case the Region found by the `where` argument doesn't exist, create a new Region with this data.
-     */
-    create: XOR<RegionCreateInput, RegionUncheckedCreateInput>
-    /**
-     * In case the Region was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<RegionUpdateInput, RegionUncheckedUpdateInput>
-  }
-
-  /**
-   * Region delete
-   */
-  export type RegionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
-    /**
-     * Filter which Region to delete.
-     */
-    where: RegionWhereUniqueInput
-  }
-
-  /**
-   * Region deleteMany
-   */
-  export type RegionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Regions to delete
-     */
-    where?: RegionWhereInput
-    /**
-     * Limit how many Regions to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Region without action
-   */
-  export type RegionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Region
-     */
-    select?: RegionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Region
-     */
-    omit?: RegionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RegionInclude<ExtArgs> | null
   }
 
 
@@ -4485,7 +3312,6 @@ export namespace Prisma {
     id: string | null
     response_time_ms: number | null
     status: $Enums.WebSiteStatus | null
-    region_id: string | null
     website_id: string | null
     createdAt: Date | null
   }
@@ -4494,7 +3320,6 @@ export namespace Prisma {
     id: string | null
     response_time_ms: number | null
     status: $Enums.WebSiteStatus | null
-    region_id: string | null
     website_id: string | null
     createdAt: Date | null
   }
@@ -4503,7 +3328,6 @@ export namespace Prisma {
     id: number
     response_time_ms: number
     status: number
-    region_id: number
     website_id: number
     createdAt: number
     _all: number
@@ -4522,7 +3346,6 @@ export namespace Prisma {
     id?: true
     response_time_ms?: true
     status?: true
-    region_id?: true
     website_id?: true
     createdAt?: true
   }
@@ -4531,7 +3354,6 @@ export namespace Prisma {
     id?: true
     response_time_ms?: true
     status?: true
-    region_id?: true
     website_id?: true
     createdAt?: true
   }
@@ -4540,7 +3362,6 @@ export namespace Prisma {
     id?: true
     response_time_ms?: true
     status?: true
-    region_id?: true
     website_id?: true
     createdAt?: true
     _all?: true
@@ -4636,7 +3457,6 @@ export namespace Prisma {
     id: string
     response_time_ms: number
     status: $Enums.WebSiteStatus
-    region_id: string | null
     website_id: string
     createdAt: Date
     _count: WebsiteTickCountAggregateOutputType | null
@@ -4664,7 +3484,6 @@ export namespace Prisma {
     id?: boolean
     response_time_ms?: boolean
     status?: boolean
-    region_id?: boolean
     website_id?: boolean
     createdAt?: boolean
     website?: boolean | WebsiteDefaultArgs<ExtArgs>
@@ -4674,7 +3493,6 @@ export namespace Prisma {
     id?: boolean
     response_time_ms?: boolean
     status?: boolean
-    region_id?: boolean
     website_id?: boolean
     createdAt?: boolean
     website?: boolean | WebsiteDefaultArgs<ExtArgs>
@@ -4684,7 +3502,6 @@ export namespace Prisma {
     id?: boolean
     response_time_ms?: boolean
     status?: boolean
-    region_id?: boolean
     website_id?: boolean
     createdAt?: boolean
     website?: boolean | WebsiteDefaultArgs<ExtArgs>
@@ -4694,12 +3511,11 @@ export namespace Prisma {
     id?: boolean
     response_time_ms?: boolean
     status?: boolean
-    region_id?: boolean
     website_id?: boolean
     createdAt?: boolean
   }
 
-  export type WebsiteTickOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "response_time_ms" | "status" | "region_id" | "website_id" | "createdAt", ExtArgs["result"]["websiteTick"]>
+  export type WebsiteTickOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "response_time_ms" | "status" | "website_id" | "createdAt", ExtArgs["result"]["websiteTick"]>
   export type WebsiteTickInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     website?: boolean | WebsiteDefaultArgs<ExtArgs>
   }
@@ -4719,7 +3535,6 @@ export namespace Prisma {
       id: string
       response_time_ms: number
       status: $Enums.WebSiteStatus
-      region_id: string | null
       website_id: string
       createdAt: Date
     }, ExtArgs["result"]["websiteTick"]>
@@ -5149,7 +3964,6 @@ export namespace Prisma {
     readonly id: FieldRef<"WebsiteTick", 'String'>
     readonly response_time_ms: FieldRef<"WebsiteTick", 'Int'>
     readonly status: FieldRef<"WebsiteTick", 'WebSiteStatus'>
-    readonly region_id: FieldRef<"WebsiteTick", 'String'>
     readonly website_id: FieldRef<"WebsiteTick", 'String'>
     readonly createdAt: FieldRef<"WebsiteTick", 'DateTime'>
   }
@@ -5593,30 +4407,19 @@ export namespace Prisma {
 
   export const WebsiteScalarFieldEnum: {
     id: 'id',
-    websiteName: 'websiteName',
+    url: 'url',
     userId: 'userId',
-    regionId: 'regionId',
     timeAdded: 'timeAdded',
-    url: 'url'
+    websiteName: 'websiteName'
   };
 
   export type WebsiteScalarFieldEnum = (typeof WebsiteScalarFieldEnum)[keyof typeof WebsiteScalarFieldEnum]
-
-
-  export const RegionScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    website_id: 'website_id'
-  };
-
-  export type RegionScalarFieldEnum = (typeof RegionScalarFieldEnum)[keyof typeof RegionScalarFieldEnum]
 
 
   export const WebsiteTickScalarFieldEnum: {
     id: 'id',
     response_time_ms: 'response_time_ms',
     status: 'status',
-    region_id: 'region_id',
     website_id: 'website_id',
     createdAt: 'createdAt'
   };
@@ -5638,14 +4441,6 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-  export const NullsOrder: {
-    first: 'first',
-    last: 'last'
-  };
-
-  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -5786,25 +4581,21 @@ export namespace Prisma {
     OR?: WebsiteWhereInput[]
     NOT?: WebsiteWhereInput | WebsiteWhereInput[]
     id?: StringFilter<"Website"> | string
-    websiteName?: StringFilter<"Website"> | string
-    userId?: StringFilter<"Website"> | string
-    regionId?: StringNullableFilter<"Website"> | string | null
-    timeAdded?: DateTimeFilter<"Website"> | Date | string
     url?: StringFilter<"Website"> | string
+    userId?: StringFilter<"Website"> | string
+    timeAdded?: DateTimeFilter<"Website"> | Date | string
+    websiteName?: StringFilter<"Website"> | string
     ticks?: WebsiteTickListRelationFilter
-    regions?: RegionListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type WebsiteOrderByWithRelationInput = {
     id?: SortOrder
-    websiteName?: SortOrder
-    userId?: SortOrder
-    regionId?: SortOrderInput | SortOrder
-    timeAdded?: SortOrder
     url?: SortOrder
+    userId?: SortOrder
+    timeAdded?: SortOrder
+    websiteName?: SortOrder
     ticks?: WebsiteTickOrderByRelationAggregateInput
-    regions?: RegionOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
   }
 
@@ -5813,23 +4604,20 @@ export namespace Prisma {
     AND?: WebsiteWhereInput | WebsiteWhereInput[]
     OR?: WebsiteWhereInput[]
     NOT?: WebsiteWhereInput | WebsiteWhereInput[]
-    websiteName?: StringFilter<"Website"> | string
-    userId?: StringFilter<"Website"> | string
-    regionId?: StringNullableFilter<"Website"> | string | null
-    timeAdded?: DateTimeFilter<"Website"> | Date | string
     url?: StringFilter<"Website"> | string
+    userId?: StringFilter<"Website"> | string
+    timeAdded?: DateTimeFilter<"Website"> | Date | string
+    websiteName?: StringFilter<"Website"> | string
     ticks?: WebsiteTickListRelationFilter
-    regions?: RegionListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type WebsiteOrderByWithAggregationInput = {
     id?: SortOrder
-    websiteName?: SortOrder
-    userId?: SortOrder
-    regionId?: SortOrderInput | SortOrder
-    timeAdded?: SortOrder
     url?: SortOrder
+    userId?: SortOrder
+    timeAdded?: SortOrder
+    websiteName?: SortOrder
     _count?: WebsiteCountOrderByAggregateInput
     _max?: WebsiteMaxOrderByAggregateInput
     _min?: WebsiteMinOrderByAggregateInput
@@ -5840,56 +4628,10 @@ export namespace Prisma {
     OR?: WebsiteScalarWhereWithAggregatesInput[]
     NOT?: WebsiteScalarWhereWithAggregatesInput | WebsiteScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Website"> | string
-    websiteName?: StringWithAggregatesFilter<"Website"> | string
-    userId?: StringWithAggregatesFilter<"Website"> | string
-    regionId?: StringNullableWithAggregatesFilter<"Website"> | string | null
-    timeAdded?: DateTimeWithAggregatesFilter<"Website"> | Date | string
     url?: StringWithAggregatesFilter<"Website"> | string
-  }
-
-  export type RegionWhereInput = {
-    AND?: RegionWhereInput | RegionWhereInput[]
-    OR?: RegionWhereInput[]
-    NOT?: RegionWhereInput | RegionWhereInput[]
-    id?: StringFilter<"Region"> | string
-    name?: StringFilter<"Region"> | string
-    website_id?: StringFilter<"Region"> | string
-    website?: XOR<WebsiteScalarRelationFilter, WebsiteWhereInput>
-  }
-
-  export type RegionOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    website_id?: SortOrder
-    website?: WebsiteOrderByWithRelationInput
-  }
-
-  export type RegionWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: RegionWhereInput | RegionWhereInput[]
-    OR?: RegionWhereInput[]
-    NOT?: RegionWhereInput | RegionWhereInput[]
-    name?: StringFilter<"Region"> | string
-    website_id?: StringFilter<"Region"> | string
-    website?: XOR<WebsiteScalarRelationFilter, WebsiteWhereInput>
-  }, "id">
-
-  export type RegionOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    website_id?: SortOrder
-    _count?: RegionCountOrderByAggregateInput
-    _max?: RegionMaxOrderByAggregateInput
-    _min?: RegionMinOrderByAggregateInput
-  }
-
-  export type RegionScalarWhereWithAggregatesInput = {
-    AND?: RegionScalarWhereWithAggregatesInput | RegionScalarWhereWithAggregatesInput[]
-    OR?: RegionScalarWhereWithAggregatesInput[]
-    NOT?: RegionScalarWhereWithAggregatesInput | RegionScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Region"> | string
-    name?: StringWithAggregatesFilter<"Region"> | string
-    website_id?: StringWithAggregatesFilter<"Region"> | string
+    userId?: StringWithAggregatesFilter<"Website"> | string
+    timeAdded?: DateTimeWithAggregatesFilter<"Website"> | Date | string
+    websiteName?: StringWithAggregatesFilter<"Website"> | string
   }
 
   export type WebsiteTickWhereInput = {
@@ -5899,7 +4641,6 @@ export namespace Prisma {
     id?: StringFilter<"WebsiteTick"> | string
     response_time_ms?: IntFilter<"WebsiteTick"> | number
     status?: EnumWebSiteStatusFilter<"WebsiteTick"> | $Enums.WebSiteStatus
-    region_id?: StringNullableFilter<"WebsiteTick"> | string | null
     website_id?: StringFilter<"WebsiteTick"> | string
     createdAt?: DateTimeFilter<"WebsiteTick"> | Date | string
     website?: XOR<WebsiteScalarRelationFilter, WebsiteWhereInput>
@@ -5909,7 +4650,6 @@ export namespace Prisma {
     id?: SortOrder
     response_time_ms?: SortOrder
     status?: SortOrder
-    region_id?: SortOrderInput | SortOrder
     website_id?: SortOrder
     createdAt?: SortOrder
     website?: WebsiteOrderByWithRelationInput
@@ -5922,7 +4662,6 @@ export namespace Prisma {
     NOT?: WebsiteTickWhereInput | WebsiteTickWhereInput[]
     response_time_ms?: IntFilter<"WebsiteTick"> | number
     status?: EnumWebSiteStatusFilter<"WebsiteTick"> | $Enums.WebSiteStatus
-    region_id?: StringNullableFilter<"WebsiteTick"> | string | null
     website_id?: StringFilter<"WebsiteTick"> | string
     createdAt?: DateTimeFilter<"WebsiteTick"> | Date | string
     website?: XOR<WebsiteScalarRelationFilter, WebsiteWhereInput>
@@ -5932,7 +4671,6 @@ export namespace Prisma {
     id?: SortOrder
     response_time_ms?: SortOrder
     status?: SortOrder
-    region_id?: SortOrderInput | SortOrder
     website_id?: SortOrder
     createdAt?: SortOrder
     _count?: WebsiteTickCountOrderByAggregateInput
@@ -5949,7 +4687,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"WebsiteTick"> | string
     response_time_ms?: IntWithAggregatesFilter<"WebsiteTick"> | number
     status?: EnumWebSiteStatusWithAggregatesFilter<"WebsiteTick"> | $Enums.WebSiteStatus
-    region_id?: StringNullableWithAggregatesFilter<"WebsiteTick"> | string | null
     website_id?: StringWithAggregatesFilter<"WebsiteTick"> | string
     createdAt?: DateTimeWithAggregatesFilter<"WebsiteTick"> | Date | string
   }
@@ -6016,120 +4753,67 @@ export namespace Prisma {
 
   export type WebsiteCreateInput = {
     id?: string
-    websiteName: string
-    regionId?: string | null
-    timeAdded?: Date | string
     url: string
+    timeAdded?: Date | string
+    websiteName: string
     ticks?: WebsiteTickCreateNestedManyWithoutWebsiteInput
-    regions?: RegionCreateNestedManyWithoutWebsiteInput
     user: UserCreateNestedOneWithoutWebsitesInput
   }
 
   export type WebsiteUncheckedCreateInput = {
     id?: string
-    websiteName: string
-    userId: string
-    regionId?: string | null
-    timeAdded?: Date | string
     url: string
+    userId: string
+    timeAdded?: Date | string
+    websiteName: string
     ticks?: WebsiteTickUncheckedCreateNestedManyWithoutWebsiteInput
-    regions?: RegionUncheckedCreateNestedManyWithoutWebsiteInput
   }
 
   export type WebsiteUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     url?: StringFieldUpdateOperationsInput | string
+    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
+    websiteName?: StringFieldUpdateOperationsInput | string
     ticks?: WebsiteTickUpdateManyWithoutWebsiteNestedInput
-    regions?: RegionUpdateManyWithoutWebsiteNestedInput
     user?: UserUpdateOneRequiredWithoutWebsitesNestedInput
   }
 
   export type WebsiteUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     url?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
+    websiteName?: StringFieldUpdateOperationsInput | string
     ticks?: WebsiteTickUncheckedUpdateManyWithoutWebsiteNestedInput
-    regions?: RegionUncheckedUpdateManyWithoutWebsiteNestedInput
   }
 
   export type WebsiteCreateManyInput = {
     id?: string
-    websiteName: string
-    userId: string
-    regionId?: string | null
-    timeAdded?: Date | string
     url: string
+    userId: string
+    timeAdded?: Date | string
+    websiteName: string
   }
 
   export type WebsiteUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     url?: StringFieldUpdateOperationsInput | string
+    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
+    websiteName?: StringFieldUpdateOperationsInput | string
   }
 
   export type WebsiteUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     url?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type RegionCreateInput = {
-    id?: string
-    name: string
-    website: WebsiteCreateNestedOneWithoutRegionsInput
-  }
-
-  export type RegionUncheckedCreateInput = {
-    id?: string
-    name: string
-    website_id: string
-  }
-
-  export type RegionUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    website?: WebsiteUpdateOneRequiredWithoutRegionsNestedInput
-  }
-
-  export type RegionUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    website_id?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type RegionCreateManyInput = {
-    id?: string
-    name: string
-    website_id: string
-  }
-
-  export type RegionUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type RegionUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    website_id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
+    websiteName?: StringFieldUpdateOperationsInput | string
   }
 
   export type WebsiteTickCreateInput = {
     id?: string
     response_time_ms: number
     status: $Enums.WebSiteStatus
-    region_id?: string | null
     createdAt?: Date | string
     website: WebsiteCreateNestedOneWithoutTicksInput
   }
@@ -6138,7 +4822,6 @@ export namespace Prisma {
     id?: string
     response_time_ms: number
     status: $Enums.WebSiteStatus
-    region_id?: string | null
     website_id: string
     createdAt?: Date | string
   }
@@ -6147,7 +4830,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     response_time_ms?: IntFieldUpdateOperationsInput | number
     status?: EnumWebSiteStatusFieldUpdateOperationsInput | $Enums.WebSiteStatus
-    region_id?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     website?: WebsiteUpdateOneRequiredWithoutTicksNestedInput
   }
@@ -6156,7 +4838,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     response_time_ms?: IntFieldUpdateOperationsInput | number
     status?: EnumWebSiteStatusFieldUpdateOperationsInput | $Enums.WebSiteStatus
-    region_id?: NullableStringFieldUpdateOperationsInput | string | null
     website_id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6165,7 +4846,6 @@ export namespace Prisma {
     id?: string
     response_time_ms: number
     status: $Enums.WebSiteStatus
-    region_id?: string | null
     website_id: string
     createdAt?: Date | string
   }
@@ -6174,7 +4854,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     response_time_ms?: IntFieldUpdateOperationsInput | number
     status?: EnumWebSiteStatusFieldUpdateOperationsInput | $Enums.WebSiteStatus
-    region_id?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6182,7 +4861,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     response_time_ms?: IntFieldUpdateOperationsInput | number
     status?: EnumWebSiteStatusFieldUpdateOperationsInput | $Enums.WebSiteStatus
-    region_id?: NullableStringFieldUpdateOperationsInput | string | null
     website_id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6254,21 +4932,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -6286,73 +4949,37 @@ export namespace Prisma {
     none?: WebsiteTickWhereInput
   }
 
-  export type RegionListRelationFilter = {
-    every?: RegionWhereInput
-    some?: RegionWhereInput
-    none?: RegionWhereInput
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type WebsiteTickOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type RegionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type WebsiteCountOrderByAggregateInput = {
     id?: SortOrder
-    websiteName?: SortOrder
-    userId?: SortOrder
-    regionId?: SortOrder
-    timeAdded?: SortOrder
     url?: SortOrder
+    userId?: SortOrder
+    timeAdded?: SortOrder
+    websiteName?: SortOrder
   }
 
   export type WebsiteMaxOrderByAggregateInput = {
     id?: SortOrder
-    websiteName?: SortOrder
-    userId?: SortOrder
-    regionId?: SortOrder
-    timeAdded?: SortOrder
     url?: SortOrder
+    userId?: SortOrder
+    timeAdded?: SortOrder
+    websiteName?: SortOrder
   }
 
   export type WebsiteMinOrderByAggregateInput = {
     id?: SortOrder
-    websiteName?: SortOrder
-    userId?: SortOrder
-    regionId?: SortOrder
-    timeAdded?: SortOrder
     url?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+    userId?: SortOrder
+    timeAdded?: SortOrder
+    websiteName?: SortOrder
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -6367,29 +4994,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type WebsiteScalarRelationFilter = {
-    is?: WebsiteWhereInput
-    isNot?: WebsiteWhereInput
-  }
-
-  export type RegionCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    website_id?: SortOrder
-  }
-
-  export type RegionMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    website_id?: SortOrder
-  }
-
-  export type RegionMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    website_id?: SortOrder
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -6410,11 +5014,15 @@ export namespace Prisma {
     not?: NestedEnumWebSiteStatusFilter<$PrismaModel> | $Enums.WebSiteStatus
   }
 
+  export type WebsiteScalarRelationFilter = {
+    is?: WebsiteWhereInput
+    isNot?: WebsiteWhereInput
+  }
+
   export type WebsiteTickCountOrderByAggregateInput = {
     id?: SortOrder
     response_time_ms?: SortOrder
     status?: SortOrder
-    region_id?: SortOrder
     website_id?: SortOrder
     createdAt?: SortOrder
   }
@@ -6427,7 +5035,6 @@ export namespace Prisma {
     id?: SortOrder
     response_time_ms?: SortOrder
     status?: SortOrder
-    region_id?: SortOrder
     website_id?: SortOrder
     createdAt?: SortOrder
   }
@@ -6436,7 +5043,6 @@ export namespace Prisma {
     id?: SortOrder
     response_time_ms?: SortOrder
     status?: SortOrder
-    region_id?: SortOrder
     website_id?: SortOrder
     createdAt?: SortOrder
   }
@@ -6524,13 +5130,6 @@ export namespace Prisma {
     connect?: WebsiteTickWhereUniqueInput | WebsiteTickWhereUniqueInput[]
   }
 
-  export type RegionCreateNestedManyWithoutWebsiteInput = {
-    create?: XOR<RegionCreateWithoutWebsiteInput, RegionUncheckedCreateWithoutWebsiteInput> | RegionCreateWithoutWebsiteInput[] | RegionUncheckedCreateWithoutWebsiteInput[]
-    connectOrCreate?: RegionCreateOrConnectWithoutWebsiteInput | RegionCreateOrConnectWithoutWebsiteInput[]
-    createMany?: RegionCreateManyWebsiteInputEnvelope
-    connect?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-  }
-
   export type UserCreateNestedOneWithoutWebsitesInput = {
     create?: XOR<UserCreateWithoutWebsitesInput, UserUncheckedCreateWithoutWebsitesInput>
     connectOrCreate?: UserCreateOrConnectWithoutWebsitesInput
@@ -6542,17 +5141,6 @@ export namespace Prisma {
     connectOrCreate?: WebsiteTickCreateOrConnectWithoutWebsiteInput | WebsiteTickCreateOrConnectWithoutWebsiteInput[]
     createMany?: WebsiteTickCreateManyWebsiteInputEnvelope
     connect?: WebsiteTickWhereUniqueInput | WebsiteTickWhereUniqueInput[]
-  }
-
-  export type RegionUncheckedCreateNestedManyWithoutWebsiteInput = {
-    create?: XOR<RegionCreateWithoutWebsiteInput, RegionUncheckedCreateWithoutWebsiteInput> | RegionCreateWithoutWebsiteInput[] | RegionUncheckedCreateWithoutWebsiteInput[]
-    connectOrCreate?: RegionCreateOrConnectWithoutWebsiteInput | RegionCreateOrConnectWithoutWebsiteInput[]
-    createMany?: RegionCreateManyWebsiteInputEnvelope
-    connect?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -6571,20 +5159,6 @@ export namespace Prisma {
     update?: WebsiteTickUpdateWithWhereUniqueWithoutWebsiteInput | WebsiteTickUpdateWithWhereUniqueWithoutWebsiteInput[]
     updateMany?: WebsiteTickUpdateManyWithWhereWithoutWebsiteInput | WebsiteTickUpdateManyWithWhereWithoutWebsiteInput[]
     deleteMany?: WebsiteTickScalarWhereInput | WebsiteTickScalarWhereInput[]
-  }
-
-  export type RegionUpdateManyWithoutWebsiteNestedInput = {
-    create?: XOR<RegionCreateWithoutWebsiteInput, RegionUncheckedCreateWithoutWebsiteInput> | RegionCreateWithoutWebsiteInput[] | RegionUncheckedCreateWithoutWebsiteInput[]
-    connectOrCreate?: RegionCreateOrConnectWithoutWebsiteInput | RegionCreateOrConnectWithoutWebsiteInput[]
-    upsert?: RegionUpsertWithWhereUniqueWithoutWebsiteInput | RegionUpsertWithWhereUniqueWithoutWebsiteInput[]
-    createMany?: RegionCreateManyWebsiteInputEnvelope
-    set?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-    disconnect?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-    delete?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-    connect?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-    update?: RegionUpdateWithWhereUniqueWithoutWebsiteInput | RegionUpdateWithWhereUniqueWithoutWebsiteInput[]
-    updateMany?: RegionUpdateManyWithWhereWithoutWebsiteInput | RegionUpdateManyWithWhereWithoutWebsiteInput[]
-    deleteMany?: RegionScalarWhereInput | RegionScalarWhereInput[]
   }
 
   export type UserUpdateOneRequiredWithoutWebsitesNestedInput = {
@@ -6607,34 +5181,6 @@ export namespace Prisma {
     update?: WebsiteTickUpdateWithWhereUniqueWithoutWebsiteInput | WebsiteTickUpdateWithWhereUniqueWithoutWebsiteInput[]
     updateMany?: WebsiteTickUpdateManyWithWhereWithoutWebsiteInput | WebsiteTickUpdateManyWithWhereWithoutWebsiteInput[]
     deleteMany?: WebsiteTickScalarWhereInput | WebsiteTickScalarWhereInput[]
-  }
-
-  export type RegionUncheckedUpdateManyWithoutWebsiteNestedInput = {
-    create?: XOR<RegionCreateWithoutWebsiteInput, RegionUncheckedCreateWithoutWebsiteInput> | RegionCreateWithoutWebsiteInput[] | RegionUncheckedCreateWithoutWebsiteInput[]
-    connectOrCreate?: RegionCreateOrConnectWithoutWebsiteInput | RegionCreateOrConnectWithoutWebsiteInput[]
-    upsert?: RegionUpsertWithWhereUniqueWithoutWebsiteInput | RegionUpsertWithWhereUniqueWithoutWebsiteInput[]
-    createMany?: RegionCreateManyWebsiteInputEnvelope
-    set?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-    disconnect?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-    delete?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-    connect?: RegionWhereUniqueInput | RegionWhereUniqueInput[]
-    update?: RegionUpdateWithWhereUniqueWithoutWebsiteInput | RegionUpdateWithWhereUniqueWithoutWebsiteInput[]
-    updateMany?: RegionUpdateManyWithWhereWithoutWebsiteInput | RegionUpdateManyWithWhereWithoutWebsiteInput[]
-    deleteMany?: RegionScalarWhereInput | RegionScalarWhereInput[]
-  }
-
-  export type WebsiteCreateNestedOneWithoutRegionsInput = {
-    create?: XOR<WebsiteCreateWithoutRegionsInput, WebsiteUncheckedCreateWithoutRegionsInput>
-    connectOrCreate?: WebsiteCreateOrConnectWithoutRegionsInput
-    connect?: WebsiteWhereUniqueInput
-  }
-
-  export type WebsiteUpdateOneRequiredWithoutRegionsNestedInput = {
-    create?: XOR<WebsiteCreateWithoutRegionsInput, WebsiteUncheckedCreateWithoutRegionsInput>
-    connectOrCreate?: WebsiteCreateOrConnectWithoutRegionsInput
-    upsert?: WebsiteUpsertWithoutRegionsInput
-    connect?: WebsiteWhereUniqueInput
-    update?: XOR<XOR<WebsiteUpdateToOneWithWhereWithoutRegionsInput, WebsiteUpdateWithoutRegionsInput>, WebsiteUncheckedUpdateWithoutRegionsInput>
   }
 
   export type WebsiteCreateNestedOneWithoutTicksInput = {
@@ -6705,20 +5251,6 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -6728,34 +5260,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -6818,22 +5322,18 @@ export namespace Prisma {
 
   export type WebsiteCreateWithoutUserInput = {
     id?: string
-    websiteName: string
-    regionId?: string | null
-    timeAdded?: Date | string
     url: string
+    timeAdded?: Date | string
+    websiteName: string
     ticks?: WebsiteTickCreateNestedManyWithoutWebsiteInput
-    regions?: RegionCreateNestedManyWithoutWebsiteInput
   }
 
   export type WebsiteUncheckedCreateWithoutUserInput = {
     id?: string
-    websiteName: string
-    regionId?: string | null
-    timeAdded?: Date | string
     url: string
+    timeAdded?: Date | string
+    websiteName: string
     ticks?: WebsiteTickUncheckedCreateNestedManyWithoutWebsiteInput
-    regions?: RegionUncheckedCreateNestedManyWithoutWebsiteInput
   }
 
   export type WebsiteCreateOrConnectWithoutUserInput = {
@@ -6867,18 +5367,16 @@ export namespace Prisma {
     OR?: WebsiteScalarWhereInput[]
     NOT?: WebsiteScalarWhereInput | WebsiteScalarWhereInput[]
     id?: StringFilter<"Website"> | string
-    websiteName?: StringFilter<"Website"> | string
-    userId?: StringFilter<"Website"> | string
-    regionId?: StringNullableFilter<"Website"> | string | null
-    timeAdded?: DateTimeFilter<"Website"> | Date | string
     url?: StringFilter<"Website"> | string
+    userId?: StringFilter<"Website"> | string
+    timeAdded?: DateTimeFilter<"Website"> | Date | string
+    websiteName?: StringFilter<"Website"> | string
   }
 
   export type WebsiteTickCreateWithoutWebsiteInput = {
     id?: string
     response_time_ms: number
     status: $Enums.WebSiteStatus
-    region_id?: string | null
     createdAt?: Date | string
   }
 
@@ -6886,7 +5384,6 @@ export namespace Prisma {
     id?: string
     response_time_ms: number
     status: $Enums.WebSiteStatus
-    region_id?: string | null
     createdAt?: Date | string
   }
 
@@ -6897,26 +5394,6 @@ export namespace Prisma {
 
   export type WebsiteTickCreateManyWebsiteInputEnvelope = {
     data: WebsiteTickCreateManyWebsiteInput | WebsiteTickCreateManyWebsiteInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RegionCreateWithoutWebsiteInput = {
-    id?: string
-    name: string
-  }
-
-  export type RegionUncheckedCreateWithoutWebsiteInput = {
-    id?: string
-    name: string
-  }
-
-  export type RegionCreateOrConnectWithoutWebsiteInput = {
-    where: RegionWhereUniqueInput
-    create: XOR<RegionCreateWithoutWebsiteInput, RegionUncheckedCreateWithoutWebsiteInput>
-  }
-
-  export type RegionCreateManyWebsiteInputEnvelope = {
-    data: RegionCreateManyWebsiteInput | RegionCreateManyWebsiteInput[]
     skipDuplicates?: boolean
   }
 
@@ -6964,34 +5441,8 @@ export namespace Prisma {
     id?: StringFilter<"WebsiteTick"> | string
     response_time_ms?: IntFilter<"WebsiteTick"> | number
     status?: EnumWebSiteStatusFilter<"WebsiteTick"> | $Enums.WebSiteStatus
-    region_id?: StringNullableFilter<"WebsiteTick"> | string | null
     website_id?: StringFilter<"WebsiteTick"> | string
     createdAt?: DateTimeFilter<"WebsiteTick"> | Date | string
-  }
-
-  export type RegionUpsertWithWhereUniqueWithoutWebsiteInput = {
-    where: RegionWhereUniqueInput
-    update: XOR<RegionUpdateWithoutWebsiteInput, RegionUncheckedUpdateWithoutWebsiteInput>
-    create: XOR<RegionCreateWithoutWebsiteInput, RegionUncheckedCreateWithoutWebsiteInput>
-  }
-
-  export type RegionUpdateWithWhereUniqueWithoutWebsiteInput = {
-    where: RegionWhereUniqueInput
-    data: XOR<RegionUpdateWithoutWebsiteInput, RegionUncheckedUpdateWithoutWebsiteInput>
-  }
-
-  export type RegionUpdateManyWithWhereWithoutWebsiteInput = {
-    where: RegionScalarWhereInput
-    data: XOR<RegionUpdateManyMutationInput, RegionUncheckedUpdateManyWithoutWebsiteInput>
-  }
-
-  export type RegionScalarWhereInput = {
-    AND?: RegionScalarWhereInput | RegionScalarWhereInput[]
-    OR?: RegionScalarWhereInput[]
-    NOT?: RegionScalarWhereInput | RegionScalarWhereInput[]
-    id?: StringFilter<"Region"> | string
-    name?: StringFilter<"Region"> | string
-    website_id?: StringFilter<"Region"> | string
   }
 
   export type UserUpsertWithoutWebsitesInput = {
@@ -7021,80 +5472,20 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
   }
 
-  export type WebsiteCreateWithoutRegionsInput = {
-    id?: string
-    websiteName: string
-    regionId?: string | null
-    timeAdded?: Date | string
-    url: string
-    ticks?: WebsiteTickCreateNestedManyWithoutWebsiteInput
-    user: UserCreateNestedOneWithoutWebsitesInput
-  }
-
-  export type WebsiteUncheckedCreateWithoutRegionsInput = {
-    id?: string
-    websiteName: string
-    userId: string
-    regionId?: string | null
-    timeAdded?: Date | string
-    url: string
-    ticks?: WebsiteTickUncheckedCreateNestedManyWithoutWebsiteInput
-  }
-
-  export type WebsiteCreateOrConnectWithoutRegionsInput = {
-    where: WebsiteWhereUniqueInput
-    create: XOR<WebsiteCreateWithoutRegionsInput, WebsiteUncheckedCreateWithoutRegionsInput>
-  }
-
-  export type WebsiteUpsertWithoutRegionsInput = {
-    update: XOR<WebsiteUpdateWithoutRegionsInput, WebsiteUncheckedUpdateWithoutRegionsInput>
-    create: XOR<WebsiteCreateWithoutRegionsInput, WebsiteUncheckedCreateWithoutRegionsInput>
-    where?: WebsiteWhereInput
-  }
-
-  export type WebsiteUpdateToOneWithWhereWithoutRegionsInput = {
-    where?: WebsiteWhereInput
-    data: XOR<WebsiteUpdateWithoutRegionsInput, WebsiteUncheckedUpdateWithoutRegionsInput>
-  }
-
-  export type WebsiteUpdateWithoutRegionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
-    url?: StringFieldUpdateOperationsInput | string
-    ticks?: WebsiteTickUpdateManyWithoutWebsiteNestedInput
-    user?: UserUpdateOneRequiredWithoutWebsitesNestedInput
-  }
-
-  export type WebsiteUncheckedUpdateWithoutRegionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
-    url?: StringFieldUpdateOperationsInput | string
-    ticks?: WebsiteTickUncheckedUpdateManyWithoutWebsiteNestedInput
-  }
-
   export type WebsiteCreateWithoutTicksInput = {
     id?: string
-    websiteName: string
-    regionId?: string | null
-    timeAdded?: Date | string
     url: string
-    regions?: RegionCreateNestedManyWithoutWebsiteInput
+    timeAdded?: Date | string
+    websiteName: string
     user: UserCreateNestedOneWithoutWebsitesInput
   }
 
   export type WebsiteUncheckedCreateWithoutTicksInput = {
     id?: string
-    websiteName: string
-    userId: string
-    regionId?: string | null
-    timeAdded?: Date | string
     url: string
-    regions?: RegionUncheckedCreateNestedManyWithoutWebsiteInput
+    userId: string
+    timeAdded?: Date | string
+    websiteName: string
   }
 
   export type WebsiteCreateOrConnectWithoutTicksInput = {
@@ -7115,78 +5506,61 @@ export namespace Prisma {
 
   export type WebsiteUpdateWithoutTicksInput = {
     id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     url?: StringFieldUpdateOperationsInput | string
-    regions?: RegionUpdateManyWithoutWebsiteNestedInput
+    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
+    websiteName?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutWebsitesNestedInput
   }
 
   export type WebsiteUncheckedUpdateWithoutTicksInput = {
     id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     url?: StringFieldUpdateOperationsInput | string
-    regions?: RegionUncheckedUpdateManyWithoutWebsiteNestedInput
+    userId?: StringFieldUpdateOperationsInput | string
+    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
+    websiteName?: StringFieldUpdateOperationsInput | string
   }
 
   export type WebsiteCreateManyUserInput = {
     id?: string
-    websiteName: string
-    regionId?: string | null
-    timeAdded?: Date | string
     url: string
+    timeAdded?: Date | string
+    websiteName: string
   }
 
   export type WebsiteUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     url?: StringFieldUpdateOperationsInput | string
+    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
+    websiteName?: StringFieldUpdateOperationsInput | string
     ticks?: WebsiteTickUpdateManyWithoutWebsiteNestedInput
-    regions?: RegionUpdateManyWithoutWebsiteNestedInput
   }
 
   export type WebsiteUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     url?: StringFieldUpdateOperationsInput | string
+    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
+    websiteName?: StringFieldUpdateOperationsInput | string
     ticks?: WebsiteTickUncheckedUpdateManyWithoutWebsiteNestedInput
-    regions?: RegionUncheckedUpdateManyWithoutWebsiteNestedInput
   }
 
   export type WebsiteUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    websiteName?: StringFieldUpdateOperationsInput | string
-    regionId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     url?: StringFieldUpdateOperationsInput | string
+    timeAdded?: DateTimeFieldUpdateOperationsInput | Date | string
+    websiteName?: StringFieldUpdateOperationsInput | string
   }
 
   export type WebsiteTickCreateManyWebsiteInput = {
     id?: string
     response_time_ms: number
     status: $Enums.WebSiteStatus
-    region_id?: string | null
     createdAt?: Date | string
-  }
-
-  export type RegionCreateManyWebsiteInput = {
-    id?: string
-    name: string
   }
 
   export type WebsiteTickUpdateWithoutWebsiteInput = {
     id?: StringFieldUpdateOperationsInput | string
     response_time_ms?: IntFieldUpdateOperationsInput | number
     status?: EnumWebSiteStatusFieldUpdateOperationsInput | $Enums.WebSiteStatus
-    region_id?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7194,7 +5568,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     response_time_ms?: IntFieldUpdateOperationsInput | number
     status?: EnumWebSiteStatusFieldUpdateOperationsInput | $Enums.WebSiteStatus
-    region_id?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7202,23 +5575,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     response_time_ms?: IntFieldUpdateOperationsInput | number
     status?: EnumWebSiteStatusFieldUpdateOperationsInput | $Enums.WebSiteStatus
-    region_id?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RegionUpdateWithoutWebsiteInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type RegionUncheckedUpdateWithoutWebsiteInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type RegionUncheckedUpdateManyWithoutWebsiteInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
   }
 
 

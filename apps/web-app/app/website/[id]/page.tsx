@@ -188,7 +188,7 @@ export default function WebsiteDetail() {
         {/* Website Header */}
         <div className='mb-8'>
           <div className='flex items-center gap-4 mb-4'>
-            <Link href='/'>
+            <Link href='/dashboard'>
               <Button
                 variant='ghost'
                 size='icon'

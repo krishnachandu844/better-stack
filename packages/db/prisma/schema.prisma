@@ -16,9 +16,9 @@ datasource db {
 
 
 model User{
-  id        String @id @default(uuid()) 
+  id        String @id @default(uuid())
   firstName String 
-  lastName  String
+  lastName  String 
   username  String 
   password  String 
   websites  Website[]
@@ -27,34 +27,33 @@ model User{
 
 model Website{
   id          String @id @default(uuid())
-  websiteName String
-  userId      String
-  regionId    String?
-  timeAdded   DateTime @default(now())
   url         String 
+  userId      String
+  timeAdded   DateTime @default(now())
+  websiteName String
   ticks       WebsiteTick[]
-  regions     Region[]
-  user        User  @relation(fields: [userId],references: [id])
+  // regions   Region[]
+  user      User  @relation(fields: [userId],references: [id],onDelete: Cascade)
 }
 
-model Region{
-  id            String @id @default(uuid())
-  name          String
-  website_id    String
-  website       Website @relation(fields: [website_id],references: [id])
-  // ticks         WebsiteTick[]
+// model Region{
+//   id            String @id @default(uuid())
+//   name          String
+//   website_id    String
+//   website       Website @relation(fields: [website_id],references: [id],onDelete: Cascade)
+//   ticks         WebsiteTick[]
 
-}
+// }
 
 model WebsiteTick{
   id                String @id @default(uuid()) 
   response_time_ms  Int 
   status            WebSiteStatus 
-  region_id         String?
+  // region_id         String 
   website_id        String 
-  // region            Region @relation(fields: [region_id],references: [id])
-  website           Website @relation(fields: [website_id],references: [id])
   createdAt         DateTime @default(now())
+  // region            Region @relation(fields: [region_id],references: [id])
+  website           Website @relation(fields: [website_id],references: [id],onDelete: Cascade)
 }
 
 enum WebSiteStatus{

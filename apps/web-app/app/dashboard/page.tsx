@@ -11,6 +11,9 @@ import {
   Search,
   MapPin,
   ExternalLink,
+  DeleteIcon,
+  Delete,
+  Trash,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -46,6 +49,8 @@ import axios from "axios";
 import { BACKEND_URL, token } from "../utility";
 import { toast } from "sonner";
 import { Ticks } from "../website/[id]/page";
+import Loader from "@/components/ui/loader";
+import { useRouter } from "next/navigation";
 
 interface Website {
   id: string;
@@ -61,11 +66,14 @@ export default function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   // const [selectedRegion, setSelectedRegion] = useState<"india" | "usa">("usa");
+  const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [newWebsite, setNewWebsite] = useState({
     name: "",
     url: "",
   });
+
+  const router = useRouter();
 
   const formatTimeByRegion = (timestamp: Date) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -87,6 +95,7 @@ export default function Dashboard() {
         Authorization: `Bearer ${token}`,
       },
     });
+
     console.log(response.data);
 
     setWebsites(
@@ -109,6 +118,7 @@ export default function Dashboard() {
         };
       })
     );
+    setLoading(false);
   };
 
   // Use Effect Getting Websites
@@ -116,6 +126,7 @@ export default function Dashboard() {
     getWebsites();
   }, []);
 
+  //Filtering Websites
   const filteredWebsites = useMemo(() => {
     return websites.filter(
       (website) =>
@@ -147,19 +158,42 @@ export default function Dashboard() {
     }
   };
 
+  //Deleting Website
+  const handleDeleteWebsite = async (websiteId: string) => {
+    try {
+      const response = await axios.delete(
+        `${BACKEND_URL}/website/${websiteId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      getWebsites();
+      toast.success(response.data.message);
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  //Refresh Websites
   const handleRefresh = async () => {
     setIsRefreshing(true);
+    setLoading(true);
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
     getWebsites();
     setIsRefreshing(false);
+    setLoading(false);
   };
 
+  //Logout
   const handleLogout = () => {
     Cookies.remove("token");
     window.location.href = "/";
   };
 
+  // Get Status
   const getStatusBadge = (status: "up" | "down" | "checking") => {
     return (
       <Badge
@@ -307,10 +341,10 @@ export default function Dashboard() {
 
               {/* Logout Button */}
               <Button
-                variant='outline'
+                variant='destructive'
                 size='sm'
                 onClick={handleLogout}
-                className='border-red-700 text-red-400  hover:bg-black hover:text-red-500 bg-transparent'
+                // className='border-red-700 text-red-400  hover:bg-black hover:text-red-500 bg-transparent'
               >
                 <LogOut className='w-4 h-4 mr-2' />
                 Logout
@@ -321,80 +355,88 @@ export default function Dashboard() {
       </div>
 
       {/* Search and Stats */}
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
-        {/* Search Bar */}
-        <div className='mb-6'>
-          <div className='relative max-w-md'>
-            <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4' />
-            <Input
-              placeholder='Search websites...'
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className='pl-10 bg-gray-900 border-gray-800 text-white placeholder:text-gray-500'
-            />
-          </div>
+      {loading ? (
+        <div className='fixed inset-0 flex items-center justify-center'>
+          <Loader />
         </div>
-
-        {/* Websites Table */}
-        <div className='bg-gray-900 border border-gray-800 rounded-lg shadow-lg overflow-hidden'>
-          <div className='px-6 py-4 border-b border-gray-800'>
-            <h2 className='text-lg font-medium text-white'>
-              Monitored Websites {searchQuery && `(${websites.length} results)`}
-            </h2>
+      ) : (
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+          {/* Search Bar */}
+          <div className='mb-6'>
+            <div className='relative max-w-md'>
+              <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4' />
+              <Input
+                placeholder='Search websites...'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className='pl-10 bg-gray-900 border-gray-800 text-white placeholder:text-gray-500'
+              />
+            </div>
           </div>
-          <Table className=''>
-            <TableHeader>
-              <TableRow className='border-gray-800 hover:bg-gray-800/50'>
-                <TableHead className='text-gray-300'>Website</TableHead>
-                <TableHead className='text-gray-300'>Status</TableHead>
-                {/* <TableHead className='text-gray-300'>Last Checked</TableHead> */}
-                <TableHead className='text-gray-300'>Response Time</TableHead>
-                <TableHead className='text-gray-300'>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {websites.length === 0 ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={6}
-                    className='text-center py-8 text-gray-400'
-                  >
-                    {searchQuery
-                      ? "No websites found matching your search."
-                      : "No websites to display."}
-                  </TableCell>
+
+          {/* Websites Table */}
+          <div className='bg-gray-900 border border-gray-800 rounded-lg shadow-lg overflow-hidden'>
+            <div className='px-6 py-4 border-b border-gray-800'>
+              <h2 className='text-lg font-medium text-white'>
+                Monitored Websites{" "}
+                {searchQuery && `(${websites.length} results)`}
+              </h2>
+            </div>
+            <Table className=' w-full table-fixed'>
+              <TableHeader className='text-center'>
+                <TableRow className='border-gray-800 hover:bg-gray-800/50'>
+                  <TableHead className='text-gray-300 px-4'>Website</TableHead>
+                  <TableHead className='text-gray-300'>Status</TableHead>
+                  {/* <TableHead className='text-gray-300'>Last Checked</TableHead> */}
+                  <TableHead className='text-gray-300'>Response Time</TableHead>
+                  <TableHead className='text-gray-300'>Actions</TableHead>
                 </TableRow>
-              ) : (
-                filteredWebsites.map((website) => (
-                  <TableRow
-                    key={website.id}
-                    className='border-gray-800 hover:bg-gray-800/30'
-                  >
-                    <TableCell>
-                      <Link href={`/website/${website.id}`} className='block'>
-                        <div className='cursor-pointer p-2'>
-                          <div className='font-medium text-white hover:text-blue-400 transition-colors'>
-                            {website.websiteName}
-                          </div>
-                          <div className='text-sm text-gray-400'>
-                            {website.url}
+              </TableHeader>
+              <TableBody>
+                {websites.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={6}
+                      className='text-center py-8 text-gray-400'
+                    >
+                      {searchQuery
+                        ? "No websites found matching your search."
+                        : "No websites to display."}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filteredWebsites.map((website) => (
+                    <TableRow
+                      key={website.id}
+                      className='border-gray-800 hover:bg-gray-800/30'
+                    >
+                      <TableCell>
+                        <div className='block'>
+                          <div className='cursor-pointer p-2'>
+                            <div className='font-medium text-white hover:text-blue-400 transition-colors'>
+                              {website.websiteName}
+                            </div>
+                            <div className='text-sm text-gray-400'>
+                              {website.url}
+                            </div>
                           </div>
                         </div>
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      {website.status === "checking" ? (
-                        <div className='flex gap-1'>
-                          <RefreshCw
-                            className={`w-4 h-4 mr-2 animate-spin text-white`}
-                          />
-                          <p className='font-medium text-white'>Checking...</p>
-                        </div>
-                      ) : (
-                        getStatusBadge(website.status)
-                      )}
-                    </TableCell>
-                    {/* <TableCell>
+                      </TableCell>
+                      <TableCell>
+                        {website.status === "checking" ? (
+                          <div className='flex gap-1'>
+                            <RefreshCw
+                              className={`w-4 h-4 mr-2 animate-spin text-white`}
+                            />
+                            <p className='font-medium text-white'>
+                              Checking...
+                            </p>
+                          </div>
+                        ) : (
+                          getStatusBadge(website.status)
+                        )}
+                      </TableCell>
+                      {/* <TableCell>
                       <div className='text-sm'>
                         <div className='text-gray-400'>
                           {website.lastChecked}
@@ -404,35 +446,49 @@ export default function Dashboard() {
                         </div>
                       </div>
                     </TableCell> */}
-                    <TableCell>
-                      <span
-                        className={`text-sm font-medium ${website.status === "up" ? "text-green-400" : "text-red-400"}`}
-                      >
-                        {website.status === "up"
-                          ? `${website.responseTime}ms`
-                          : "N/A"}
-                      </span>
-                    </TableCell>
-
-                    <TableCell>
-                      <Link href={`/website/${website.id}`}>
-                        <Button
-                          variant='outline'
-                          size='sm'
-                          className='border-gray-700 text-gray-300 hover:bg-gray-800 bg-transparent'
+                      <TableCell>
+                        <span
+                          className={`text-sm font-medium ${website.status === "up" ? "text-green-400" : "text-red-400"}`}
                         >
-                          <ExternalLink className='w-4 h-4 mr-2' />
-                          View Details
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                          {website.status === "up"
+                            ? `${website.responseTime}ms`
+                            : "N/A"}
+                        </span>
+                      </TableCell>
+
+                      <TableCell>
+                        <div className='flex gap-4'>
+                          <Button
+                            variant='outline'
+                            size='sm'
+                            onClick={() => {
+                              router.push(`/website/${website.id}`);
+                            }}
+                            className='border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white bg-transparent'
+                          >
+                            <ExternalLink className='w-4 h-4 mr-2' />
+                            View Details
+                          </Button>
+                          <Button
+                            variant='destructive'
+                            size='sm'
+                            onClick={() => {
+                              console.log("clicked");
+                              handleDeleteWebsite(website.id);
+                            }}
+                          >
+                            <Trash />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

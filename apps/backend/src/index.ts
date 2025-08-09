@@ -10,6 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Add Website
 app.post("/website", authMiddleware, async (req, res) => {
   const { url, regionId, websiteName } = req.body;
   const isWebsiteExists = await prisma.website.findFirst({
@@ -40,21 +41,44 @@ app.post("/website", authMiddleware, async (req, res) => {
   });
 });
 
+//Delete Website
+app.delete("/website/:websiteId", authMiddleware, async (req, res) => {
+  try {
+    const website = await prisma.website.delete({
+      where: {
+        id: req.params.websiteId,
+        userId: req.userId,
+      },
+    });
+    if (website) {
+      res.status(200).json({ message: "Deleted Successfully" });
+      return;
+    }
+    res.status(200).json({ message: "Unable to Delete" });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //Getting specific website last 10 ticks
 app.get("/status/:websiteId", authMiddleware, async (req, res) => {
-  const websites = await prisma.website.findFirst({
-    where: {
-      userId: req.userId!,
-      id: req.params.websiteId,
-    },
-    include: {
-      ticks: {
-        orderBy: [{ createdAt: "desc" }],
-        take: 10,
+  try {
+    const websites = await prisma.website.findFirst({
+      where: {
+        userId: req.userId!,
+        id: req.params.websiteId,
       },
-    },
-  });
-  res.json(websites);
+      include: {
+        ticks: {
+          orderBy: [{ createdAt: "desc" }],
+          take: 10,
+        },
+      },
+    });
+    res.json(websites);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 //Getting all Websites of an user
@@ -77,6 +101,7 @@ app.get("/websites", authMiddleware, async (req, res) => {
   } catch (error) {}
 });
 
+//Signup
 app.post("/user/signup", async (req, res) => {
   const parsedData = SignupSchema.safeParse(req.body);
   if (!parsedData.success) {
@@ -110,6 +135,7 @@ app.post("/user/signup", async (req, res) => {
   }
 });
 
+//Signin
 app.post("/user/signin", async (req, res) => {
   const parsedData = SigninSchema.safeParse(req.body);
   if (!parsedData.success) {
